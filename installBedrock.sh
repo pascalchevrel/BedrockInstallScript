@@ -29,8 +29,10 @@ echo "Install Bedrock dependencies"
 ./venv/bin/pip install jinja2 django-bcrypt
 echo "Copy settings/local.py-dist into settings/local.py"
 cp settings/local.py-dist settings/local.py
+echo "Check out the latest product-details"
+./manage.py update_product_details
 echo "Install the less compiler"
-npm install -g less
+sudo npm install -g less
 echo "LESS_BIN = '/usr/local/bin/lessc'" >> settings/local.py
 #echo 'ROOT_URLCONF = "urls"' >> settings/local.py
 echo "Check out all the translation which live on svn in the localizers repository"
