@@ -33,7 +33,7 @@ echo "Check out the latest product-details"
 ./manage.py update_product_details
 echo "Install the less compiler"
 sudo npm install -g less
-echo "LESS_BIN = '/usr/local/bin/lessc'" >> settings/local.py
+echo -e "\nLESS_BIN = '/usr/local/bin/lessc'" >> settings/local.py
 #echo 'ROOT_URLCONF = "urls"' >> settings/local.py
 echo "Check out all the translation which live on svn in the localizers repository"
 mkdir locale
