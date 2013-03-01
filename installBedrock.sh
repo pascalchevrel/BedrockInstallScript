@@ -55,7 +55,7 @@ cp settings/local.py-dist settings/local.py
 echo "Check out the latest product-details"
 ./manage.py update_product_details
 
-echo -e "\nLESS_BIN = '/usr/local/bin/lessc'" >> settings/local.py
+echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> settings/local.py
 
 echo "Check out all the translations which live on svn in the localizers repositories"
 
