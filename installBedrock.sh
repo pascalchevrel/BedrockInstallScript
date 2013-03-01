@@ -16,7 +16,7 @@ echo ""
 if [ $globaldependencies == 'y' ]
 then
     echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
-    sudo apt-get install subversion git nodejs npm python-virtualenv python-dev
+    sudo apt-get install subversion git nodejs npm python-virtualenv python-dev libxml2-dev libxslt1-dev
     ./venv/bin/pip install -r requirements/dev.txt   # installs dev dependencies
 fi
 
