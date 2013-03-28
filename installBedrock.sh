@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "BEDROCK installation script on Linux"
-echo "Warning: This install script works on Ubuntu 12.04, it hasn't been tested on anything else."
+echo "Warning: This install script works on Ubuntu 12.10 (64bits), it should work on 12.04, but it hasn't been tested on anything else."
 echo "Warning: There is no error handling whatsoever."
 echo "Feel free to fork it for another distro or to add your changes"
 echo "This script is going to install Bedrock in a bedrock folder."
