@@ -1,9 +1,9 @@
 #! /bin/bash
 
 echo "BEDROCK installation script on Linux"
-echo "Warning: This install script works on Ubuntu 12.10 (64bits), it should work on 12.04, but it hasn't been tested on anything else."
+echo "Warning: This install script works on Ubuntu 13.04 (64bits)"
 echo "Warning: There is no error handling whatsoever."
-echo "Feel free to fork it for another distro or to add your changes"
+echo "Feel free to fork it and adapt it for another distro or update your changes"
 echo "This script is going to install Bedrock in a bedrock folder."
 echo "We assume that you have recently forked bedrock on github and will use that as a basis."
 echo "If you are in a Virtual Machine, don't forget to add your ssh key on it"
@@ -22,7 +22,6 @@ fi
 
 echo "git@github.com:${repo}/bedrock.git"
 git clone --recursive git@github.com:${repo}/bedrock.git
-#git clone --recursive https://${repo}@github.com/${repo}/bedrock.git
 
 cd ./bedrock
 
@@ -49,13 +48,13 @@ fi
 echo "Install more Bedrock dependencies"
 ./venv/bin/pip install jinja2 django-bcrypt
 
-echo "Copy settings/local.py-dist into settings/local.py"
-cp settings/local.py-dist settings/local.py
+echo "Copy bedrock/settings/local.py-dist into bedrock/settings/local.py"
+cp bedrock/settings/local.py-dist bedrock/settings/local.py
 
 echo "Check out the latest product-details"
 ./manage.py update_product_details
 
-echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> settings/local.py
+echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> bedrock/settings/local.py
 
 echo "Check out all the translations which live on svn in the localizers repositories"
 
