@@ -17,7 +17,6 @@ if [ $globaldependencies == 'y' ]
 then
     echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
     sudo apt-get install subversion git nodejs npm python-virtualenv python-dev libxml2-dev libxslt1-dev node-less
-    ./venv/bin/pip install -r requirements/dev.txt   # installs dev dependencies
 fi
 
 echo "git@github.com:${repo}/bedrock.git"
@@ -54,10 +53,15 @@ cp bedrock/settings/local.py-dist bedrock/settings/local.py
 echo "Check out the latest product-details"
 ./manage.py update_product_details
 
+echo "Check out external files (forums and credits)"
+./manage.py update_externalfiles
+
+
 echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> bedrock/settings/local.py
 
 echo "Check out all the translations which live on svn in the localizers repositories"
 
+# ln -s ~/repos/svn/mozillaorg/trunk/locales/ locale
 mkdir locale
 cd locale
 svn co https://svn.mozilla.org/projects/mozilla.com/trunk/locales/ .
