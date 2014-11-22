@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -o errexit
+
 echo "BEDROCK installation script on Linux"
 echo "Warning: This install script works on Ubuntu 13.04 (64bits)"
 echo "Warning: There is no error handling whatsoever."
