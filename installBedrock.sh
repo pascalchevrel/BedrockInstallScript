@@ -16,7 +16,8 @@ echo ""
 if [ $globaldependencies == 'y' ]
 then
     echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
-    sudo apt-get install subversion git nodejs npm python-virtualenv python-dev libxml2-dev libxslt1-dev node-less
+    sudo apt-get update
+    sudo apt-get install -y subversion git nodejs npm python-virtualenv python-dev libxml2-dev libxslt1-dev node-less
 fi
 
 echo "git@github.com:${repo}/bedrock.git"
@@ -28,11 +29,11 @@ echo "git://github.com/mozilla/bedrock.git added as upstream remote "
 git remote add upstream git://github.com/mozilla/bedrock.git
 
 echo "Create a virtual environement in the folder venv"
-virtualenv venv                            # create a virtual env in the folder `venv`
+virtualenv venv                                         # create a virtual env in the folder `venv`
 echo "Activate the virtual env"
-source venv/bin/activate                   # activate the virtual env
+source venv/bin/activate                                # activate the virtual env
 echo "Install Bedrock local dependencies in venv"
-./venv/bin/pip install -r requirements/compiled.txt   # installs compiled dependencies
+./venv/bin/pip install -r requirements/compiled.txt     # installs compiled dependencies
 
 echo "Do you want to install developper dependencies to be able to run tests locally and participate to documentation? (y/n)"
 read -n 1 devdependencies
@@ -50,14 +51,19 @@ echo "Install more Bedrock dependencies"
 echo "Copy bedrock/settings/local.py-dist into bedrock/settings/local.py"
 cp bedrock/settings/local.py-dist bedrock/settings/local.py
 
-echo "Check out the latest product-details"
-./manage.py update_product_details
-
-echo "Check out external files (forums and credits)"
-./manage.py update_externalfiles
+echo "Sync database schemas"
+./bin/sync_all
 
 
-echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> bedrock/settings/local.py
+sudo pip uninstall -y django    # included as submodule, we do not want the one installed by django-nose requirements
+sudo pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
+
+echo "npm install: less, grunt-cli, jshint"
+npm install -g less
+npm install -g grunt-cli
+npm install -g jshint
+npm install
+#echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> bedrock/settings/local.py
 
 echo "Check out all the translations which live on svn in the localizers repositories"
 
@@ -66,3 +72,5 @@ mkdir locale
 cd locale
 svn co https://svn.mozilla.org/projects/mozilla.com/trunk/locales/ .
 
+echo "start mysql"
+mysql-ctl start
