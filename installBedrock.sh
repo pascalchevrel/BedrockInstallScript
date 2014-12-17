@@ -77,10 +77,10 @@ sudo pip uninstall -y django    # included as submodule, we do not want the one 
 sudo pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
 
 echo "npm install: less, grunt-cli, jshint"
-npm install -g less
-npm install -g grunt-cli
-npm install -g jshint
-npm install
+sudo npm install -g less
+sudo npm install -g grunt-cli
+sudo npm install -g jshint
+sudo npm install
 #echo -e "\nLESS_BIN = '/usr/bin/lessc'" >> bedrock/settings/local.py
 
 echo "Check out all the translations which live on svn in the localizers repositories"
@@ -89,6 +89,3 @@ echo "Check out all the translations which live on svn in the localizers reposit
 mkdir locale
 cd locale
 svn co https://svn.mozilla.org/projects/mozilla.com/trunk/locales/ .
-
-echo "start mysql"
-mysql-ctl start
