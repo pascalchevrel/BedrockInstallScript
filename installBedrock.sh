@@ -23,7 +23,7 @@ if [ $globaldependencies == 'y' ]
 then
     echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
     sudo apt-get update
-    sudo apt-get install -y subversion git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less
+    sudo apt-get install -y subversion git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less libmysqlclient-dev
 fi
 
 if [ $https == 'y' ]
@@ -73,8 +73,8 @@ echo "Sync database schemas"
 ./bin/sync_all
 
 
-sudo pip uninstall -y django    # included as submodule, we do not want the one installed by django-nose requirements
-sudo pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
+./venv/bin/pip uninstall -y django    # included as submodule, we do not want the one installed by django-nose requirements
+./venv/bin/pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
 
 echo "npm install: less, grunt-cli, jshint"
 sudo npm install -g less
