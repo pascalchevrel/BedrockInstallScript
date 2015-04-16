@@ -42,7 +42,7 @@ if [ $globaldependencies == 'y' ]
 then
     echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
     sudo apt-get update
-    sudo apt-get install -y subversion git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less libmysqlclient-dev nodejs-legacy
+    sudo apt-get install -y subversion git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less nodejs-legacy
 fi
 
 echogreen "Cloning Bedrock locally"
@@ -84,16 +84,7 @@ virtualenv venv             # create a virtual env in the folder `venv`
 echo "Activate the virtual env"
 source ./venv/bin/activate    # activate the virtual env
 echogreen "Install Bedrock local dependencies in venv"
-./venv/bin/pip install -r requirements/prod.txt
-
-echored "Do you want to install developper dependencies to be able to run tests locally and participate to documentation? (y/n)"
-read -n 1 devdependencies
-echo ""
-if [ $devdependencies == 'y' ]
-then
-    echogreen "Installing developer dependencies..."
-    ./venv/bin/pip install -r requirements/dev.txt
-fi
+./venv/bin/pip install -r requirements/dev.txt
 
 ./venv/bin/pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
 
@@ -123,5 +114,6 @@ svn co https://svn.mozilla.org/projects/mozilla.com/trunk/locales/ .
 
 
 echogreen "Sync database schemas"
+cd ..
 ./bin/sync_all
 
