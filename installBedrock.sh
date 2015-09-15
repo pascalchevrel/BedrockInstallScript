@@ -85,7 +85,6 @@ echo "Activate the virtual env"
 source ./venv/bin/activate    # activate the virtual env
 echogreen "Install Bedrock local dependencies in venv"
 ./venv/bin/pip install -r requirements/pip.txt
-./venv/bin/pip install --upgrade pip
 ./bin/peep.py install -r requirements/dev.txt
 
 echored "Do you want to install npm dependencies globally (sudo needed)? (y/n)"
