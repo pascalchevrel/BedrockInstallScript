@@ -16,12 +16,12 @@ function echogreen() {
 }
 
 echogreen "BEDROCK installation script on Ubuntu"
-echo "Warning: This install script works on Ubuntu 14.10 (64bits)"
+echo "Warning: This install script works on Ubuntu 14.10 and 15.04 (64bits)"
 echo "Warning: There is no error handling whatsoever."
 echo "Feel free to fork it and adapt it for another distro or update your changes"
 echo "This script is going to install Bedrock in a bedrock folder."
 echo "We assume that you have recently forked bedrock on github and will use that as a basis."
-echo "If you are in a Virtual Machine, don't forget to add your ssh key on it"
+echo "If you are in a Virtual Machine, don't forget to add your ssh key on it or choose https for repository cloning."
 
 echored "Please provide your github user name below: "
 read repo
@@ -80,13 +80,13 @@ git pull upstream master
 git submodule update --init --recursive
 
 echogreen "Create a virtual environement in the folder venv"
-virtualenv venv             # create a virtual env in the folder `venv`
+virtualenv -p python2.7 venv   # create a virtual env in the folder `venv`
 echo "Activate the virtual env"
 source ./venv/bin/activate    # activate the virtual env
 echogreen "Install Bedrock local dependencies in venv"
-./venv/bin/pip install -r requirements/dev.txt
-
-./venv/bin/pip install ipython        # highly recommended, but not required so not in requirements/dev.txt
+./venv/bin/pip install -r requirements/pip.txt
+./venv/bin/pip install --upgrade pip
+./bin/peep.py install -r requirements/dev.txt
 
 echored "Do you want to install npm dependencies globally (sudo needed)? (y/n)"
 read -n 1 npmdependencies
