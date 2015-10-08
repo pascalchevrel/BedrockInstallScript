@@ -105,12 +105,10 @@ sed -i -- "s/STATSD_HOST = ''/STATSD_HOST = 'localhost'/g" bedrock/settings/loca
 
 find . -name '*.pyc' -exec rm {} \;
 
-echogreen "Check out all the translations which live on svn in the localizers repositories"
+echogreen "Check out all the translations which live in a separate github repo"
 # ln -s ~/repos/svn/mozillaorg/trunk/locales/ locale
 mkdir locale
-cd locale
-svn co https://svn.mozilla.org/projects/mozilla.com/trunk/locales/ .
-
+git clone https://github.com/mozilla-l10n/www.mozilla.org locale
 
 echogreen "Sync database schemas"
 cd ..
