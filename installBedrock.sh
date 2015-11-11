@@ -16,14 +16,14 @@ function echogreen() {
 }
 
 echogreen "BEDROCK installation script on Ubuntu"
-echo "Warning: This install script works on Ubuntu 14.10 and 15.04 (64bits)"
+echo "Warning: This install script works on Ubuntu 15.04 and 15.10 (64bits), just because that's what I tested it on"
 echo "Warning: There is no error handling whatsoever."
 echo "Feel free to fork it and adapt it for another distro or update your changes"
 echo "This script is going to install Bedrock in a bedrock folder."
-echo "We assume that you have recently forked bedrock on github and will use that as a basis."
+echo "We assume that you have recently forked Bedrock on GitHub and will use that as a basis."
 echo "If you are in a Virtual Machine, don't forget to add your ssh key on it or choose https for repository cloning."
 
-echored "Please provide your github user name below: "
+echored "Please provide your GitHub user name below:"
 read repo
 
 if [ -z "$repo" ]
@@ -35,14 +35,14 @@ echored "Do you use GitHub via HTTPS? (y/n)"
 read -n 1 https
 echo ""
 
-echored "Do you need to install subversion git nodejs npm python-virtualenv python-dev (sudo password needed)? (y/n)"
+echored "Do you need to install git nodejs npm python-virtualenv python-dev (sudo password needed)? (y/n)"
 read -n 1 globaldependencies
 echo ""
 if [ $globaldependencies == 'y' ]
 then
-    echo "Sudo mode, install Node.js, Subversion, Git, npm, virtualenv. (if they were not already installed)"
+    echo "Sudo mode, install Node.js, Git, npm, virtualenv. (if they were not already installed)"
     sudo apt-get update
-    sudo apt-get install -y subversion git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less nodejs-legacy
+    sudo apt-get install -y git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less nodejs-legacy
 fi
 
 echogreen "Cloning Bedrock locally"
@@ -81,7 +81,7 @@ git submodule update --init --recursive
 
 echogreen "Create a virtual environement in the folder venv"
 virtualenv -p python2.7 venv   # create a virtual env in the folder `venv`
-echo "Activate the virtual env"
+echo "Activate the virtual environment"
 source ./venv/bin/activate    # activate the virtual env
 echogreen "Install Bedrock local dependencies in venv"
 ./venv/bin/pip install -r requirements/pip.txt
@@ -107,10 +107,16 @@ find . -name '*.pyc' -exec rm {} \;
 
 echogreen "Check out all the translations which live in a separate github repo"
 # ln -s ~/repos/svn/mozillaorg/trunk/locales/ locale
-mkdir locale
-git clone https://github.com/mozilla-l10n/www.mozilla.org locale
+
+if [ -d "bedrock/locale" ]
+then
+    mkdir locale
+fi
+
+if [ -d "bedrock/locale/.git" ]
+then
+    git clone https://github.com/mozilla-l10n/www.mozilla.org locale
+fi
 
 echogreen "Sync database schemas"
-cd ..
 ./bin/sync_all
-
