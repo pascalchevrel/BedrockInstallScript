@@ -84,8 +84,8 @@ virtualenv -p python2.7 venv   # create a virtual env in the folder `venv`
 echo "Activate the virtual environment"
 source ./venv/bin/activate    # activate the virtual env
 echogreen "Install Bedrock local dependencies in venv"
-./venv/bin/pip install -r requirements/pip.txt
-./bin/peep.py install -r requirements/dev.txt
+python ./bin/pipstrap.py
+./venv/bin/pip install -r requirements/dev.txt
 
 echored "Do you want to install npm dependencies globally (sudo needed)? (y/n)"
 read -n 1 npmdependencies
