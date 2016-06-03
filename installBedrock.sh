@@ -100,7 +100,8 @@ then
 fi
 
 echogreen "Copy bedrock/settings/local.py-dist into bedrock/settings/local.py"
-cp bedrock/settings/local.py-dist bedrock/settings/local.py
+cp .env-dist .env
+
 sed -i -- "s/STATSD_HOST = ''/STATSD_HOST = 'localhost'/g" bedrock/settings/local.py
 
 find . -name '*.pyc' -exec rm {} \;
