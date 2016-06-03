@@ -16,7 +16,7 @@ function echogreen() {
 }
 
 echogreen "BEDROCK installation script on Ubuntu"
-echo "Warning: This install script works on Ubuntu 15.04 and 15.10 (64bits), just because that's what I tested it on"
+echo "Warning: This install script works on Ubuntu 16.04 (64bits), just because that's what I tested it on"
 echo "Warning: There is no error handling whatsoever."
 echo "Feel free to fork it and adapt it for another distro or update your changes"
 echo "This script is going to install Bedrock in a bedrock folder."
