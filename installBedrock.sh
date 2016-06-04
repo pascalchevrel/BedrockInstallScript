@@ -92,10 +92,11 @@ read -n 1 npmdependencies
 echo ""
 if [ $npmdependencies == 'y' ]
 then
-    echogreen "npm install: less, grunt-cli, jshint"
+    echogreen "npm install: less, grunt-cli, jshint, gulp"
     sudo npm install -g less
     sudo npm install -g grunt-cli
     sudo npm install -g jshint
+    sudo npm install -g gulp-cli
     sudo npm install
 fi
 
@@ -119,5 +120,6 @@ then
     git clone https://github.com/mozilla-l10n/www.mozilla.org locale
 fi
 
-echogreen "Sync database schemas"
+echogreen "Sync database schemas (this step takes a looooong time...)"
 ./bin/sync_all
+echogreen "Bedrock is now installed, you can launch the local server with this command: gulp"
