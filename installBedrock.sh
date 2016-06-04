@@ -95,10 +95,14 @@ echogreen "Copy .env-dist into .env"
 cp .env-dist .env
 
 echogreen "Check out all the translations which live in a separate github repo"
-
-if [ -d "bedrock/locale" ]
+if [ ! -d "locale" ]
 then
     git clone https://github.com/mozilla-l10n/www.mozilla.org locale
+else
+    cd locale
+    echogreen "Update translations"
+    git pull
+    cd ..
 fi
 
 echogreen "Sync database schemas (this step takes a looooong time...)"
