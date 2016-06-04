@@ -82,12 +82,12 @@ git submodule update --init --recursive
 echogreen "Create a virtual environement in the venv folder"
 virtualenv -p python2.7 venv
 echo "Activate the virtual environment"
-deactivate
 source ./venv/bin/activate
 
 echogreen "Install Bedrock local dependencies in venv"
 python ./bin/pipstrap.py
 ./venv/bin/pip install -r requirements/dev.txt
+deactivate
 
 echored "Installation of npm dependencies in the project"
 sudo npm install
