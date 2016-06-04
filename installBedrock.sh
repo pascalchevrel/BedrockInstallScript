@@ -79,10 +79,10 @@ echogreen "Get latest commits from upstream Bedrock"
 git pull upstream master
 git submodule update --init --recursive
 
-echogreen "Create a virtual environement in the folder venv"
-virtualenv -p python2.7 venv   # create a virtual env in the folder `venv`
+echogreen "Create a virtual environement in the venv folder"
+virtualenv -p python2.7 venv
 echo "Activate the virtual environment"
-source ./venv/bin/activate    # activate the virtual env
+source ./venv/bin/activate
 echogreen "Install Bedrock local dependencies in venv"
 python ./bin/pipstrap.py
 ./venv/bin/pip install -r requirements/dev.txt
@@ -95,31 +95,23 @@ then
     echogreen "npm install: less, grunt-cli, jshint, gulp"
     sudo npm install -g less
     sudo npm install -g grunt-cli
-    sudo npm install -g jshint
     sudo npm install -g gulp-cli
+    sudo npm install -g jshint
     sudo npm install
 fi
 
-echogreen "Copy bedrock/settings/local.py-dist into bedrock/settings/local.py"
+echogreen "Copy .env-dist into .env"
 cp .env-dist .env
-
-sed -i -- "s/STATSD_HOST = ''/STATSD_HOST = 'localhost'/g" bedrock/settings/local.py
-
-find . -name '*.pyc' -exec rm {} \;
 
 echogreen "Check out all the translations which live in a separate github repo"
 # ln -s ~/repos/svn/mozillaorg/trunk/locales/ locale
 
 if [ -d "bedrock/locale" ]
 then
-    mkdir locale
-fi
-
-if [ -d "bedrock/locale/.git" ]
-then
     git clone https://github.com/mozilla-l10n/www.mozilla.org locale
 fi
 
 echogreen "Sync database schemas (this step takes a looooong time...)"
 ./bin/sync_all
+
 echogreen "Bedrock is now installed, you can launch the local server with this command: gulp"
