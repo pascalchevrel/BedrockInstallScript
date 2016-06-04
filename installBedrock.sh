@@ -82,29 +82,20 @@ git submodule update --init --recursive
 echogreen "Create a virtual environement in the venv folder"
 virtualenv -p python2.7 venv
 echo "Activate the virtual environment"
+deactivate
 source ./venv/bin/activate
+
 echogreen "Install Bedrock local dependencies in venv"
 python ./bin/pipstrap.py
 ./venv/bin/pip install -r requirements/dev.txt
 
-echored "Do you want to install npm dependencies globally (sudo needed)? (y/n)"
-read -n 1 npmdependencies
-echo ""
-if [ $npmdependencies == 'y' ]
-then
-    echogreen "npm install: less, grunt-cli, jshint, gulp"
-    sudo npm install -g less
-    sudo npm install -g grunt-cli
-    sudo npm install -g gulp-cli
-    sudo npm install -g jshint
-    sudo npm install
-fi
+echored "Installation of npm dependencies in the project"
+sudo npm install
 
 echogreen "Copy .env-dist into .env"
 cp .env-dist .env
 
 echogreen "Check out all the translations which live in a separate github repo"
-# ln -s ~/repos/svn/mozillaorg/trunk/locales/ locale
 
 if [ -d "bedrock/locale" ]
 then
@@ -114,4 +105,7 @@ fi
 echogreen "Sync database schemas (this step takes a looooong time...)"
 ./bin/sync_all
 
-echogreen "Bedrock is now installed, you can launch the local server with this command: gulp"
+echogreen "Bedrock is now installed, enter your bedrock folder, activate your virtual enronment and run gulp, ehre are the commands:"
+echogreen "cd bedrock"
+echogreen "source ./venv/bin/activate"
+echogreen "./node_modules/gulp/bin/gulp.js"
