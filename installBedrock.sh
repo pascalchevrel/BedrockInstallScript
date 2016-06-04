@@ -87,10 +87,9 @@ source ./venv/bin/activate
 echogreen "Install Bedrock local dependencies in venv"
 python ./bin/pipstrap.py
 ./venv/bin/pip install -r requirements/dev.txt
-deactivate
 
 echored "Installation of npm dependencies in the project"
-sudo npm install
+npm install
 
 echogreen "Copy .env-dist into .env"
 cp .env-dist .env
@@ -104,6 +103,9 @@ fi
 
 echogreen "Sync database schemas (this step takes a looooong time...)"
 ./bin/sync_all
+
+echo "Deactivate the virtual environment"
+deactivate
 
 echogreen "Bedrock is now installed, enter your bedrock folder, activate your virtual enronment and run gulp, ehre are the commands:"
 echogreen "cd bedrock"
