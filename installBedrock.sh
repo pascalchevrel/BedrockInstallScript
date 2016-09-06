@@ -63,7 +63,7 @@ fi
 cd ./bedrock
 if git remote | grep upstream > /dev/null
 then
-    echored "Upstream remote is alteady set"
+    echored "Upstream remote is already set"
 else
     if [ $https == 'y' ]
     then
@@ -71,7 +71,7 @@ else
         git remote add upstream https://github.com/mozilla/bedrock.git
     else
         echogreen "git://github.com/mozilla/bedrock.git added as upstream remote "
-        git remote add upstream git://github.com/mozilla/bedrock.git -f
+        git remote add upstream git://github.com/mozilla/bedrock.git
     fi
 fi
 
