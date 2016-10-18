@@ -40,9 +40,9 @@ read -n 1 globaldependencies
 echo ""
 if [ $globaldependencies == 'y' ]
 then
-    echo "Sudo mode, install Node.js, Git, npm, virtualenv. (if they were not already installed)"
+    echored "Sudo mode: install Git, nodejs, npm, virtualenv (if they were not already installed)"
     sudo apt-get update
-    sudo apt-get install -y git nodejs python-virtualenv python-dev libxml2-dev libxslt1-dev node-less nodejs-legacy
+    sudo apt-get install -y git python-virtualenv python-dev libxml2-dev libxslt1-dev npm nodejs
 fi
 
 echogreen "Cloning Bedrock locally"
@@ -50,14 +50,13 @@ if [ -d "bedrock/.git" ]
 then
     echored "Repository already cloned"
 else
+    git_repo="git@github.com:${repo}/bedrock.git"
     if [ $https == 'y' ]
     then
-        echogreen "Repository: https://github.com/${repo}/bedrock.git"
-        git clone --recursive https://github.com/${repo}/bedrock.git
-    else
-        echogreen "Repository: git@github.com:${repo}/bedrock.git"
-        git clone --recursive git@github.com:${repo}/bedrock.git
+        git_repo="https://github.com/${repo}/bedrock.git"
     fi
+    echogreen "Repository: ${git_repo}"
+    git clone --recursive $git_repo
 fi
 
 cd ./bedrock
@@ -79,16 +78,19 @@ echogreen "Get latest commits from upstream Bedrock"
 git pull upstream master
 git submodule update --init --recursive
 
-echogreen "Create a virtual environement in the venv folder"
-virtualenv -p python2.7 venv
+echogreen "Create a virtual environement in the venv_bedrock folder"
+virtualenv -p python2.7 venv_bedrock
 echo "Activate the virtual environment"
-source ./venv/bin/activate
+source ./venv_bedrock/bin/activate
 
-echogreen "Install Bedrock local dependencies in venv"
+echogreen "Install Bedrock local dependencies in venv_bedrock"
 python ./bin/pipstrap.py
-./venv/bin/pip install -r requirements/dev.txt
+./venv_bedrock/bin/pip install -r requirements/dev.txt
 
 echored "Installation of npm dependencies in the project"
+echored "We first create this symlink needed for Debian based distros:"
+echored "sudo ln -sf /usr/bin/nodejs /usr/bin/node"
+sudo ln -sf /usr/bin/nodejs /usr/bin/node
 npm install
 
 echogreen "Copy .env-dist into .env"
@@ -97,7 +99,7 @@ cp .env-dist .env
 echogreen "Check out all the translations which live in a separate github repo"
 if [ ! -d "locale" ]
 then
-    git clone https://github.com/mozilla-l10n/www.mozilla.org locale
+    git clone --depth=1 https://github.com/mozilla-l10n/www.mozilla.org locale
 else
     cd locale
     echogreen "Update translations"
@@ -113,5 +115,5 @@ deactivate
 
 echogreen "Bedrock is now installed, enter your bedrock folder, activate your virtual enronment and run gulp, ehre are the commands:"
 echogreen "cd bedrock"
-echogreen "source ./venv/bin/activate"
+echogreen "source ./venv_bedrock/bin/activate"
 echogreen "./node_modules/gulp/bin/gulp.js"
