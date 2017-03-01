@@ -42,7 +42,7 @@ if [ $globaldependencies == 'y' ]
 then
     echored "Sudo mode: install Git, nodejs, npm, virtualenv (if they were not already installed)"
     sudo apt-get update
-    sudo apt-get install -y git python-virtualenv python-dev libxml2-dev libxslt1-dev npm nodejs
+    sudo apt-get install -y git python-virtualenv python-dev libxml2-dev libxslt1-dev npm nodejs-legacy
 fi
 
 echogreen "Cloning Bedrock locally"
@@ -85,16 +85,17 @@ source ./venv_bedrock/bin/activate
 
 echogreen "Install Bedrock local dependencies in venv_bedrock"
 ./venv_bedrock/bin/pip install --upgrade pip
-./venv_bedrock/bin/pip install -r requirements/dev.txt
+./venv_bedrock/bin/pip install -r requirements/test.txt
 
 echored "Installation of npm dependencies in the project"
-echored "We first create this symlink needed for Debian based distros:"
-echored "sudo ln -sf /usr/bin/nodejs /usr/bin/node"
-sudo ln -sf /usr/bin/nodejs /usr/bin/node
 npm install
 
 echogreen "Copy .env-dist into .env"
 cp .env-dist .env
+
+echored "Gulp doesn't work for me, I deactivate it by adding PIPELINE_COLLECTOR_ENABLED=True to .env"
+echo -e "PIPELINE_COLLECTOR_ENABLED=True" >> .env
+
 
 echogreen "Check out all the translations which live in a separate github repo"
 if [ ! -d "locale" ]
@@ -116,4 +117,4 @@ deactivate
 echogreen "Bedrock is now installed, enter your bedrock folder, activate your virtual enronment and run gulp, ehre are the commands:"
 echogreen "cd bedrock"
 echogreen "source ./venv_bedrock/bin/activate"
-echogreen "./node_modules/gulp/bin/gulp.js"
+echogreen "./manage.py runserver"
