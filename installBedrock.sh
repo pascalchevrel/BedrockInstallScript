@@ -84,7 +84,7 @@ echo "Activate the virtual environment"
 source ./venv_bedrock/bin/activate
 
 echogreen "Install Bedrock local dependencies in venv_bedrock"
-python ./bin/pipstrap.py
+./venv_bedrock/bin/pip install --upgrade pip
 ./venv_bedrock/bin/pip install -r requirements/dev.txt
 
 echored "Installation of npm dependencies in the project"
@@ -108,7 +108,7 @@ else
 fi
 
 echogreen "Sync database schemas (this step takes a looooong time...)"
-./bin/sync_all
+./bin/sync-all.sh
 
 echo "Deactivate the virtual environment"
 deactivate
